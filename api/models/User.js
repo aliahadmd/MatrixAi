@@ -39,9 +39,15 @@ const userSchema = new mongoose.Schema(
     payments: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "History",
+        ref: "Payment",
       },
     ],
+    history:[
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "History",
+        }
+    ]
   },
   {
     timestamps: true,
