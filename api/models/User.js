@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 // schema for the Users
 
@@ -16,9 +16,13 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    trialPeriod:{
+      type: Number,
+      default: 3, //3days trial period
+    },
     trialActive: {
       type: Boolean,
-      required: true,
+      default: true,
     },
     trialExpires: {
       type: Date,
@@ -56,4 +60,4 @@ const userSchema = new mongoose.Schema(
 
 const User= mongoose.model("User", userSchema);
 
-export default User;
+module.exports = User;

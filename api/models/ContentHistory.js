@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 // schema for the Users
 
@@ -20,4 +20,4 @@ const HistorySchema = new mongoose.Schema(
 
 const ContentHistory = mongoose.model("ContentHistory", HistorySchema);
 
-export default ContentHistory;
+module.exports = ContentHistory;
