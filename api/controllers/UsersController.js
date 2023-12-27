@@ -49,6 +49,39 @@ const register = asyncHandler(async (req, res) => {
 
 //-------------Login---------------
 
+const login = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+
+  // check for user email
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    res.status(401);
+    throw new Error("Invalid Email or Password");
+  }
+
+  // check for password (if password is valid)
+  const isMatch = await bcrypt.compare(password, user?.password);
+
+  if (!isMatch) {
+    res.status(401);
+    throw new Error("Invalid Email or Password");
+  }
+
+  //Generate token (jwt)
+  //set the token into cookie (http only)
+
+  // send the response
+  res.json({
+    status: "success",
+    _id: user?._id,
+    message: "Login was Successfull",
+    username: user?.username,
+    email: user?.email,
+  });
+
+})
+
 //-------------Logout---------------
 
 //-------------Profile---------------
@@ -58,4 +91,5 @@ const register = asyncHandler(async (req, res) => {
 // export
 module.exports = {
   register,
+  login,
 };
