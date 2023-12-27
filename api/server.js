@@ -6,6 +6,9 @@ const app = express();
 require('dotenv').config();
 const PORT = process.env.PORT || 5000;
 
+// Router
+const userRouter = require('./routes/UsersRouter');
+app.use('/api/v1/users', userRouter);
 
 
 // start the server
