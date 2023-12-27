@@ -8,7 +8,7 @@ const register = asyncHandler(async (req, res) => {
 
   //make sure user are providing data: validation
   if (!username || !email || !password) {
-    return res.status(400);
+    res.status(400);
     throw new Error("Please provide all the required data");
   }
 
