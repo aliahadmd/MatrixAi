@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const asyncHandler = require("express-async-handler");
+const jwt = require("jsonwebtoken");
 
 //-------------Registration---------------
 const register = asyncHandler(async (req, res) => {
@@ -69,7 +70,23 @@ const login = asyncHandler(async (req, res) => {
   }
 
   //Generate token (jwt)
+  const token = jwt.sign(
+    {
+      id: user?._id,
+    },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: "3d",
+    }
+  );
+
   //set the token into cookie (http only)
+  res.cookie("token", token, {
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000, // 1 day
+    sameSite: "strict",
+    secure: process.env.NODE_ENV === "production",
+  });
 
   // send the response
   res.json({
@@ -79,8 +96,7 @@ const login = asyncHandler(async (req, res) => {
     username: user?.username,
     email: user?.email,
   });
-
-})
+});
 
 //-------------Logout---------------
 
